@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState, FormEvent } from 'react';
+import { useState, FormEvent } from 'react';
 import { supabaseBrowser } from '@/lib/supabase/client';
 import { translations, Lang } from './i18n';
 
@@ -18,15 +18,13 @@ type Status = 'checking' | 'form' | 'submitting' | 'done';
 export default function GuestPage() {
   const [name, setName] = useState('');
   const [message, setMessage] = useState('');
-  const [status, setStatus] = useState<Status>('checking');
+  const [status, setStatus] = useState<Status>('form');
   const [justSubmitted, setJustSubmitted] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
 
   const lang: Lang = 'ar';
   const t = translations[lang];
   const dir = 'rtl';
-
-  // The guestbook form is always available so visitors can submit more than once.
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
