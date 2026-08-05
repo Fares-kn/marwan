@@ -12,25 +12,6 @@ import { translations, Lang } from './i18n';
 // graduation guestbook; a hard per-person limit would need real guest
 // identity (unique invite links, phone/email verification), which adds
 // friction this app is intentionally avoiding.
-const STORAGE_KEY = 'graduation_guestbook_signed';
-
-function hasAlreadySigned(): boolean {
-  try {
-    if (window.localStorage.getItem(STORAGE_KEY) === 'true') return true;
-  } catch {
-    // localStorage can throw in some private-browsing modes; fall through to the cookie check.
-  }
-  return document.cookie.split('; ').includes(`${STORAGE_KEY}=true`);
-}
-
-function markAsSigned() {
-  try {
-    window.localStorage.setItem(STORAGE_KEY, 'true');
-  } catch {
-    // ignore - the cookie below is the backup
-  }
-  document.cookie = `${STORAGE_KEY}=true; max-age=${60 * 60 * 24 * 365}; path=/; samesite=lax`;
-}
 
 type Status = 'checking' | 'form' | 'submitting' | 'done';
 
@@ -45,12 +26,7 @@ export default function GuestPage() {
   const t = translations[lang];
   const dir = 'rtl';
 
-  // Runs once on mount, client-side only (checking localStorage/cookies
-  // during server rendering isn't possible, so the form briefly shows a
-  // blank state instead of a flash of the form for returning guests).
-  useEffect(() => {
-    setStatus(hasAlreadySigned() ? 'done' : 'form');
-  }, []);
+  // The guestbook form is always available so visitors can submit more than once.
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
@@ -74,7 +50,6 @@ export default function GuestPage() {
       return;
     }
 
-    markAsSigned();
     setJustSubmitted(true);
     setStatus('done');
   }
@@ -159,7 +134,7 @@ export default function GuestPage() {
       </div>
       </main>
       <footer className="mt-10 text-center text-[10px] text-ink/50">
-        made with ❤️ by fares
+        made with ❤️ by fares fadi
       </footer>
     </div>
   );
