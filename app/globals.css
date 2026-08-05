@@ -1,0 +1,21 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Noto+Naskh+Arabic:wght@400;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-display: 'Fraunces', serif;
+  --font-body: 'Inter', sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+  --font-arabic: 'Noto Naskh Arabic', sans-serif;
+}
+
+html,
+body {
+  background-color: #f5efdf;
+}
+
+* {
+  -webkit-tap-highlight-color: transparent;
+}

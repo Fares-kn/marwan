@@ -1,0 +1,32 @@
+<svg width="1200" height="1500" viewBox="0 0 1200 1500" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1200" y2="1500" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F8EEE0" />
+      <stop offset="1" stop-color="#FFF7EE" />
+    </linearGradient>
+    <linearGradient id="pen" x1="300" y1="750" x2="900" y2="750" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#D4A973" />
+      <stop offset="1" stop-color="#C48F4F" />
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="1500" rx="80" fill="url(#bg)" />
+
+  <rect x="160" y="220" width="880" height="820" rx="60" fill="#FFFFFF" stroke="#E8E0CB" stroke-width="14" />
+  <path d="M220 320C220 296.386 240.386 276 264 276H936C959.614 276 980 296.386 980 320V440C980 463.614 959.614 484 936 484H264C240.386 484 220 463.614 220 440V320Z" fill="#F6E7D4" />
+  <rect x="264" y="540" width="672" height="28" rx="14" fill="#E8E0CB" />
+  <rect x="264" y="620" width="520" height="28" rx="14" fill="#E8E0CB" />
+  <rect x="264" y="700" width="620" height="28" rx="14" fill="#E8E0CB" />
+  <rect x="264" y="780" width="500" height="28" rx="14" fill="#E8E0CB" />
+  <rect x="264" y="860" width="600" height="28" rx="14" fill="#E8E0CB" />
+
+  <rect x="210" y="1040" width="780" height="240" rx="40" fill="#FFF1E7" />
+  <path d="M240 1060C240 1042.327 255.327 1027 273 1027H727C744.673 1027 760 1042.327 760 1060V1180C760 1197.673 744.673 1213 727 1213H273C255.327 1213 240 1197.673 240 1180V1060Z" fill="#F8E6D6" />
+  <path d="M420 1130L780 930" stroke="url(#pen)" stroke-width="48" stroke-linecap="round" />
+  <circle cx="800" cy="950" r="70" fill="#D4A973" />
+  <path d="M840 940L830 960L820 940" stroke="#FFFFFF" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" />
+
+  <circle cx="300" cy="1260" r="70" fill="#E8D4B1" />
+  <circle cx="940" cy="1260" r="70" fill="#E8D4B1" />
+  <path d="M360 1230C360 1210 380 1195 400 1195H760C780 1195 800 1210 800 1230V1280C800 1300 780 1315 760 1315H400C380 1315 360 1300 360 1280V1230Z" fill="#F4E2D0" />
+</svg>
