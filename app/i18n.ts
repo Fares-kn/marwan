@@ -5,7 +5,7 @@ export const translations = {
     title: 'إلى مروان حافظ القراَن',
     subtitle: 'اكتب له كلمة و ازرع له دعوة , فلعلها ترافقه طول العمر',
     nameLabel: 'اسمك',
-    namePlaceholder: 'مثال: سارة أحمد',
+    namePlaceholder: 'مثال: فارس فادي',
     messageLabel: 'رسالتك',
     messagePlaceholder: '',
     submit: 'إرسال',
