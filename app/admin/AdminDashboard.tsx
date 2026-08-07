@@ -103,7 +103,7 @@ export default function AdminDashboard({ messages }: { messages: Message[] }) {
 
         container.innerHTML = '';
         const card = document.createElement('div');
-        card.dir = 'auto';
+        card.dir = 'rtl';
         card.style.fontFamily = "'Inter', 'Noto Naskh Arabic', sans-serif";
         card.style.background = '#ffffff';
         card.style.border = '1px solid #E8E0CB';
@@ -114,12 +114,18 @@ export default function AdminDashboard({ messages }: { messages: Message[] }) {
         card.style.width = '100%';
         card.style.maxWidth = '100%';
 
+        const nameRow = document.createElement('div');
+        nameRow.style.display = 'flex';
+        nameRow.style.flexDirection = 'column';
+        nameRow.style.alignItems = 'flex-end';
+        nameRow.style.marginBottom = '10px';
+
         const nameLabel = document.createElement('div');
         nameLabel.textContent = 'الاسم:';
         nameLabel.style.fontSize = '12px';
         nameLabel.style.color = '#666666';
         nameLabel.style.marginBottom = '6px';
-        nameLabel.dir = 'auto';
+        nameLabel.dir = 'rtl';
 
         const nameEl = document.createElement('div');
         nameEl.textContent = msg.guest_name || 'Anonymous';
@@ -127,17 +133,15 @@ export default function AdminDashboard({ messages }: { messages: Message[] }) {
         nameEl.style.fontWeight = '600';
         nameEl.style.fontSize = '20px';
         nameEl.style.color = '#1B2A4A';
-        nameEl.dir = 'auto';
+        nameEl.dir = 'rtl';
 
-        // Include the message body in the exported PDF cards, but do not
-        // include any timestamps or times. Add an Arabic label above it.
         const messageLabel = document.createElement('div');
         messageLabel.textContent = 'الرسالة:';
         messageLabel.style.fontSize = '12px';
         messageLabel.style.color = '#666666';
         messageLabel.style.marginTop = '12px';
         messageLabel.style.marginBottom = '6px';
-        messageLabel.dir = 'auto';
+        messageLabel.dir = 'rtl';
 
         const bodyEl = document.createElement('div');
         bodyEl.textContent = msg.message_content;
@@ -146,24 +150,14 @@ export default function AdminDashboard({ messages }: { messages: Message[] }) {
         bodyEl.style.color = '#1C1B1F';
         bodyEl.style.whiteSpace = 'pre-wrap';
         bodyEl.style.wordBreak = 'break-word';
+        bodyEl.dir = 'auto';
 
-        // Build card: label + name, then label + message
-        const nameBlock = document.createElement('div');
-        nameBlock.appendChild(nameLabel);
-        nameBlock.appendChild(nameEl);
+        nameRow.appendChild(nameLabel);
+        nameRow.appendChild(nameEl);
 
-        nameRow.appendChild(nameBlock);
         card.appendChild(nameRow);
         card.appendChild(messageLabel);
         card.appendChild(bodyEl);
-        container.appendChild(card);
-        nameEl.style.fontSize = '20px';
-        nameEl.style.color = '#1B2A4A';
-
-        nameRow.appendChild(nameEl);
-
-        // Do not include the message body in the exported PDF cards
-        card.appendChild(nameRow);
         container.appendChild(card);
 
         const canvas = await html2canvas(container, {
