@@ -63,7 +63,7 @@ export default function AdminDashboard({ messages }: { messages: Message[] }) {
     headerCard.style.padding = '0 0 12px 0';
 
     const titleEl = document.createElement('div');
-    titleEl.textContent = '# إلى مروان حافظ القراَن';
+    titleEl.textContent = ' إلى مروان حافظ القراَن';
     titleEl.style.fontSize = '22px';
     titleEl.style.fontWeight = '700';
     titleEl.style.color = '#1B2A4A';
@@ -129,7 +129,8 @@ export default function AdminDashboard({ messages }: { messages: Message[] }) {
         nameEl.style.color = '#1B2A4A';
 
         const dateEl = document.createElement('span');
-        dateEl.textContent = new Date(msg.created_at).toLocaleString();
+        // Show only the date portion (no time) in exports
+        dateEl.textContent = new Date(msg.created_at).toLocaleDateString();
         dateEl.style.fontFamily = "'IBM Plex Mono', monospace";
         dateEl.style.fontSize = '13px';
         dateEl.style.color = '#999999';
@@ -138,17 +139,8 @@ export default function AdminDashboard({ messages }: { messages: Message[] }) {
         nameRow.appendChild(nameEl);
         nameRow.appendChild(dateEl);
 
-        const bodyEl = document.createElement('div');
-        bodyEl.textContent = msg.message_content;
-        bodyEl.style.fontSize = '16px';
-        bodyEl.style.lineHeight = '1.6';
-        bodyEl.style.color = '#1C1B1F';
-        bodyEl.style.whiteSpace = 'pre-wrap';
-        bodyEl.style.wordBreak = 'break-word';
-        bodyEl.style.marginTop = '4px';
-
+        // Do not include the message body in the exported PDF cards
         card.appendChild(nameRow);
-        card.appendChild(bodyEl);
         container.appendChild(card);
 
         const canvas = await html2canvas(container, {
