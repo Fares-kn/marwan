@@ -63,7 +63,7 @@ export default function AdminDashboard({ messages }: { messages: Message[] }) {
     headerCard.style.padding = '0 0 12px 0';
 
     const titleEl = document.createElement('div');
-    titleEl.textContent = ' إلى مروان حافظ القراَن';
+    titleEl.textContent = 'إلى مروان حافظ القراَن';
     titleEl.style.fontSize = '22px';
     titleEl.style.fontWeight = '700';
     titleEl.style.color = '#1B2A4A';
@@ -116,7 +116,7 @@ export default function AdminDashboard({ messages }: { messages: Message[] }) {
 
         const nameRow = document.createElement('div');
         nameRow.style.display = 'flex';
-        nameRow.style.justifyContent = 'space-between';
+        nameRow.style.justifyContent = 'flex-end';
         nameRow.style.alignItems = 'baseline';
         nameRow.style.gap = '16px';
         nameRow.style.marginBottom = '10px';
@@ -128,16 +128,7 @@ export default function AdminDashboard({ messages }: { messages: Message[] }) {
         nameEl.style.fontSize = '20px';
         nameEl.style.color = '#1B2A4A';
 
-        const dateEl = document.createElement('span');
-        // Show only the date portion (no time) in exports
-        dateEl.textContent = new Date(msg.created_at).toLocaleDateString();
-        dateEl.style.fontFamily = "'IBM Plex Mono', monospace";
-        dateEl.style.fontSize = '13px';
-        dateEl.style.color = '#999999';
-        dateEl.style.whiteSpace = 'nowrap';
-
         nameRow.appendChild(nameEl);
-        nameRow.appendChild(dateEl);
 
         // Do not include the message body in the exported PDF cards
         card.appendChild(nameRow);
