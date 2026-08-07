@@ -41,26 +41,10 @@ export default function AdminDashboard({ messages }: { messages: Message[] }) {
     const captureWidthPx = Math.round(contentWidthPt * ptToPx);
     let y = margin;
 
-    doc.setFont('helvetica', 'bold');
-    doc.setFontSize(20);
-    doc.setTextColor('#1B2A4A');
-    doc.text('Graduation Guestbook', margin, y);
-    y += 20;
-
-    doc.setFont('helvetica', 'normal');
-    doc.setFontSize(10);
-    doc.setTextColor('#666666');
-    doc.text(`${count} message${count === 1 ? '' : 's'} - exported ${new Date().toLocaleString()}`, margin, y);
-    y += 20;
-
-    doc.setDrawColor('#B8912F');
-    doc.setLineWidth(1);
-    doc.line(margin, y, pageWidth - margin, y);
-    y += 24;
-
-    // Off-screen element used to render each card the same way the browser
-    // renders any other text on the page (correct Arabic shaping and
-    // right-to-left ordering included), so html2canvas can rasterize it.
+    // Off-screen element used to render the header and each card the same
+    // way the browser renders any other text on the page (correct Arabic
+    // shaping and right-to-left ordering included), so html2canvas can
+    // rasterize it.
     const container = document.createElement('div');
     container.style.position = 'fixed';
     container.style.top = '0';
@@ -70,6 +54,48 @@ export default function AdminDashboard({ messages }: { messages: Message[] }) {
     container.style.padding = '24px 0';
     container.style.boxSizing = 'border-box';
     document.body.appendChild(container);
+
+    // Render the PDF title and summary via html2canvas so Arabic text
+    // shapes correctly. The export time is intentionally omitted.
+    container.innerHTML = '';
+    const headerCard = document.createElement('div');
+    headerCard.style.fontFamily = "'Fraunces', 'Noto Naskh Arabic', serif";
+    headerCard.style.padding = '0 0 12px 0';
+
+    const titleEl = document.createElement('div');
+    titleEl.textContent = '# إلى مروان حافظ القراَن';
+    titleEl.style.fontSize = '22px';
+    titleEl.style.fontWeight = '700';
+    titleEl.style.color = '#1B2A4A';
+    titleEl.dir = 'auto';
+
+    const subtitleEl = document.createElement('div');
+    subtitleEl.textContent = `${count} message${count === 1 ? '' : 's'}`;
+    subtitleEl.style.fontSize = '12px';
+    subtitleEl.style.color = '#666666';
+
+    headerCard.appendChild(titleEl);
+    headerCard.appendChild(subtitleEl);
+    container.appendChild(headerCard);
+
+    const headerCanvas = await html2canvas(container, {
+      scale: 2,
+      backgroundColor: '#ffffff',
+    });
+
+    const headerHeightPt = (headerCanvas.height / headerCanvas.width) * contentWidthPt;
+    if (y + headerHeightPt > pageHeight - margin) {
+      doc.addPage();
+      y = margin;
+    }
+
+    doc.addImage(headerCanvas.toDataURL('image/png'), 'PNG', margin, y, contentWidthPt, headerHeightPt);
+    y += headerHeightPt + 12;
+
+    doc.setDrawColor('#B8912F');
+    doc.setLineWidth(1);
+    doc.line(margin, y, pageWidth - margin, y);
+    y += 24;
 
     try {
       for (let i = 0; i < messages.length; i++) {
@@ -164,7 +190,7 @@ export default function AdminDashboard({ messages }: { messages: Message[] }) {
       <div className="mx-auto max-w-4xl">
         <div className="flex flex-wrap items-center justify-between gap-4 mb-8">
           <div>
-            <h1 className="font-display text-3xl text-navy">Guestbook Messages</h1>
+            <h1 className="font-display text-3xl text-navy">إلى مروان حافظ القراَن</h1>
             <p className="text-sm text-ink/60">
               {count} message{count === 1 ? '' : 's'} received
             </p>
@@ -198,9 +224,7 @@ export default function AdminDashboard({ messages }: { messages: Message[] }) {
               <article key={msg.id} className="bg-white rounded-2xl border border-line p-5 flex flex-col">
                 <div className="flex items-baseline justify-between gap-3 mb-2">
                   <h2 className="font-display text-lg text-navy truncate">{msg.guest_name || 'Anonymous'}</h2>
-                  <time className="text-xs font-mono text-ink/40 whitespace-nowrap">
-                    {new Date(msg.created_at).toLocaleDateString()}
-                  </time>
+                  
                 </div>
                 <p dir="auto" className="text-sm text-ink/80 whitespace-pre-wrap leading-relaxed">
                   {msg.message_content}
