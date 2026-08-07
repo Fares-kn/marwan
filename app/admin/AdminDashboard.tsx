@@ -117,8 +117,19 @@ export default function AdminDashboard({ messages }: { messages: Message[] }) {
         const nameRow = document.createElement('div');
         nameRow.style.display = 'flex';
         nameRow.style.justifyContent = 'flex-end';
-        nameRow.style.alignItems = 'baseline';
+        // Include the message body in the exported PDF cards, but do not
+        // include any timestamps or times.
+        const bodyEl = document.createElement('div');
+        bodyEl.textContent = msg.message_content;
+        bodyEl.style.fontSize = '16px';
+        bodyEl.style.lineHeight = '1.6';
+        bodyEl.style.color = '#1C1B1F';
+        bodyEl.style.whiteSpace = 'pre-wrap';
+        bodyEl.style.wordBreak = 'break-word';
+        bodyEl.style.marginTop = '12px';
+
         nameRow.style.gap = '16px';
+        card.appendChild(bodyEl);
         nameRow.style.marginBottom = '10px';
 
         const nameEl = document.createElement('span');
