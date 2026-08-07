@@ -69,10 +69,15 @@ export default function AdminDashboard({ messages }: { messages: Message[] }) {
     titleEl.style.color = '#1B2A4A';
     titleEl.dir = 'auto';
 
+    const arabicDigits = (n: number) => String(n).replace(/\d/g, (d) => '٠١٢٣٤٥٦٧٨٩'[Number(d)]);
+
     const subtitleEl = document.createElement('div');
-    subtitleEl.textContent = `${count} message${count === 1 ? '' : 's'}`;
+    // Show count in Arabic-Indic numerals with Arabic label
+    subtitleEl.textContent = `${arabicDigits(count)} ${count === 1 ? 'رسالة' : 'رسائل'}`;
     subtitleEl.style.fontSize = '12px';
     subtitleEl.style.color = '#666666';
+    subtitleEl.dir = 'rtl';
+    subtitleEl.style.textAlign = 'right';
 
     headerCard.appendChild(titleEl);
     headerCard.appendChild(subtitleEl);
@@ -117,7 +122,7 @@ export default function AdminDashboard({ messages }: { messages: Message[] }) {
         const nameRow = document.createElement('div');
         nameRow.style.display = 'flex';
         nameRow.style.flexDirection = 'column';
-        nameRow.style.alignItems = 'flex-end';
+        nameRow.style.alignItems = 'stretch';
         nameRow.style.marginBottom = '10px';
 
         const nameLabel = document.createElement('div');
@@ -126,6 +131,7 @@ export default function AdminDashboard({ messages }: { messages: Message[] }) {
         nameLabel.style.color = '#666666';
         nameLabel.style.marginBottom = '6px';
         nameLabel.dir = 'rtl';
+        nameLabel.style.textAlign = 'right';
 
         const nameEl = document.createElement('div');
         nameEl.textContent = msg.guest_name || 'Anonymous';
@@ -134,6 +140,7 @@ export default function AdminDashboard({ messages }: { messages: Message[] }) {
         nameEl.style.fontSize = '20px';
         nameEl.style.color = '#1B2A4A';
         nameEl.dir = 'rtl';
+        nameEl.style.textAlign = 'right';
 
         const messageLabel = document.createElement('div');
         messageLabel.textContent = 'الرسالة:';
