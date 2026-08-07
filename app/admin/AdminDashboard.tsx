@@ -114,11 +114,31 @@ export default function AdminDashboard({ messages }: { messages: Message[] }) {
         card.style.width = '100%';
         card.style.maxWidth = '100%';
 
-        const nameRow = document.createElement('div');
-        nameRow.style.display = 'flex';
-        nameRow.style.justifyContent = 'flex-end';
+        const nameLabel = document.createElement('div');
+        nameLabel.textContent = 'الاسم:';
+        nameLabel.style.fontSize = '12px';
+        nameLabel.style.color = '#666666';
+        nameLabel.style.marginBottom = '6px';
+        nameLabel.dir = 'auto';
+
+        const nameEl = document.createElement('div');
+        nameEl.textContent = msg.guest_name || 'Anonymous';
+        nameEl.style.fontFamily = "'Fraunces', 'Noto Naskh Arabic', serif";
+        nameEl.style.fontWeight = '600';
+        nameEl.style.fontSize = '20px';
+        nameEl.style.color = '#1B2A4A';
+        nameEl.dir = 'auto';
+
         // Include the message body in the exported PDF cards, but do not
-        // include any timestamps or times.
+        // include any timestamps or times. Add an Arabic label above it.
+        const messageLabel = document.createElement('div');
+        messageLabel.textContent = 'الرسالة:';
+        messageLabel.style.fontSize = '12px';
+        messageLabel.style.color = '#666666';
+        messageLabel.style.marginTop = '12px';
+        messageLabel.style.marginBottom = '6px';
+        messageLabel.dir = 'auto';
+
         const bodyEl = document.createElement('div');
         bodyEl.textContent = msg.message_content;
         bodyEl.style.fontSize = '16px';
@@ -126,16 +146,17 @@ export default function AdminDashboard({ messages }: { messages: Message[] }) {
         bodyEl.style.color = '#1C1B1F';
         bodyEl.style.whiteSpace = 'pre-wrap';
         bodyEl.style.wordBreak = 'break-word';
-        bodyEl.style.marginTop = '12px';
 
-        nameRow.style.gap = '16px';
+        // Build card: label + name, then label + message
+        const nameBlock = document.createElement('div');
+        nameBlock.appendChild(nameLabel);
+        nameBlock.appendChild(nameEl);
+
+        nameRow.appendChild(nameBlock);
+        card.appendChild(nameRow);
+        card.appendChild(messageLabel);
         card.appendChild(bodyEl);
-        nameRow.style.marginBottom = '10px';
-
-        const nameEl = document.createElement('span');
-        nameEl.textContent = msg.guest_name || 'Anonymous';
-        nameEl.style.fontFamily = "'Fraunces', 'Noto Naskh Arabic', serif";
-        nameEl.style.fontWeight = '600';
+        container.appendChild(card);
         nameEl.style.fontSize = '20px';
         nameEl.style.color = '#1B2A4A';
 
